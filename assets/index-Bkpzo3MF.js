@@ -134,7 +134,7 @@ ${n}`);throw n instanceof Error&&n.stack&&(u.stack=n.stack),u}}};ht.defaultOptio
         </div>
       </div>`}menu(e){let t=Fl.map(e=>`<button class="chip${e===Vl()?` on`:``}" data-lang="${e}">${Il[e]}</button>`).join(``),n=k.reduce((t,n)=>t+(e.stars[n.id]??0),0),r=e.nightMax>0,i=Math.max(0,...Object.values(e.endless)),a=e.daily[cu()],o=(e,t,n,r,i=!0,a=``)=>`<button class="mode${a}" ${e} ${i?``:`disabled`}>
         <i class="art"${r?` style="background-image:url('${r}')"`:``}></i>
-        <b>${q(t)}</b><span>${q(n)}</span>
+        <span class="tag"><b>${q(t)}</b><span>${q(n)}</span></span>
       </button>`;return`
       <div class="screen menu">
         <div class="langs chips">${t}</div>
@@ -148,7 +148,7 @@ ${n}`);throw n instanceof Error&&n.stack&&(u.stack=n.stack),u}}};ht.defaultOptio
           ${o(`data-act="endless"`,W(`ui.endless`),r?i>0?W(`ui.endless.best`,{n:i}):W(`ui.menu.endlessNote`):W(`ui.menu.afterAct`),Dc(`map-mog`),r)}
           ${o(`data-level="daily"`,W(`daily.title`),r?a?W(`ui.daily.best`,{score:a.score,stars:Gu(a.stars)}):W(`ui.daily.note`):W(`ui.menu.afterAct`),Dc(`map-bal`),r)}
           ${o(`data-act="shelf"`,W(`ui.shelf`),r?W(`ui.shelf.note`,{n:Eu(e)}):W(`ui.menu.afterAct`),Dc(`hata`),r,` figure`)}
-          ${o(`data-act="bestiary"`,W(`ui.bestiary`),W(`ui.menu.bestiaryNote`),H(`tsmok`,`portrait`),!0,` figure`)}
+          ${o(`data-act="bestiary"`,W(`ui.bestiary`),W(`ui.menu.bestiaryNote`),H(`tsmok`,`figure`),!0,` figure`)}
           ${o(`data-act="free"`,W(`ui.menu.free`),W(`ui.menu.freeNote`),Dc(`gate`),!0,` figure`)}
         </div>
         </div>

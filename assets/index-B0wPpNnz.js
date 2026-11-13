@@ -178,7 +178,10 @@ ${n}`);throw n instanceof Error&&n.stack&&(u.stack=n.stack),u}}};ht.defaultOptio
       <div class="bossbar">
         <div class="name">${q(Gl(n))}<span>${Ul(`boss.${n}.short`)?q(W(`boss.${n}.short`)):``}</span></div>
         <div class="bar"><i style="width:${t}%"></i></div>
-      </div>`}nights(e,t){if(e.act===0||t.nightMax===0)return``;let n=Math.min(t.night,t.nightMax),r=Array.from({length:t.nightMax+1},(e,t)=>{let r=t===0?W(`ui.night.none`):`☾${t}`;return`<button class="chip${t===n?` on`:``}" data-night="${t}">${r}</button>`}).join(``),i=Array.from({length:n},(e,t)=>`<li>${q(W(`night.${t+1}`))}</li>`).join(``);return`<div class="chips">${r}</div>${i?`<ul class="curses">${i}</ul>`:``}`}bestiary(e,t){let n=wu(e),r=Ou(e),i=(e,t)=>`<div class="entry locked"><div class="pic">${t?`<img class="shade" src="${t}" alt="" />`:``}</div><div><b>???</b><p>${q(e)}</p></div></div>`,a=e=>e?W(`act.${e}`):``,o={spirit:e=>n.heroes.includes(e),foe:t=>e.seen.includes(t),charm:e=>r.includes(e),bond:e=>pa.get(e).heroes.every(e=>n.heroes.includes(e))},s={spirit:kl.filter(e=>e.kind===`spirit`).map(e=>e.id),foe:kl.filter(e=>e.kind===`foe`).map(e=>e.id),charm:mi.map(e=>e.id),bond:fa.map(e=>e.id)},c;c=t===`charm`?mi.map(e=>{if(!r.includes(e.id)){let t=k.find(t=>t.rules.charms?.includes(e.id));return i(t?W(`ui.hint.charm`,{level:eu(t)}):W(`ui.charmLocked`))}return`<div class="entry charm"><div class="pic">✶</div><div><b>${q(Jl(e.id))}</b><p>${q(W(`charm.${e.id}.text`))}</p></div></div>`}).join(``):t===`bond`?fa.map(e=>{let t=e.heroes.filter(e=>!n.heroes.includes(e));if(t.length)return i(W(`ui.hint.bond`,{names:t.map(G).join(` + `)}));let r=e.heroes.map(e=>H(e,`figure`)).map(e=>e?`<img src="${e}" alt="" />`:``).join(``);return`<div class="entry bond" style="--accent:${Ku(e.heroes[0])}"><div class="pic">${r}</div><div><b>${q(Yl(e.id))}</b><p>${q(W(`bond.${e.id}.text`))}</p></div></div>`}).join(``):kl.filter(e=>e.kind===t).map(n=>{if(o[t](n.id))return this.entry(n.id,e);if(t===`spirit`){let e=k.find(e=>e.introduces?.heroes?.includes(n.id));return i(e?W(`ui.hint.spirit`,{level:eu(e)}):W(`ui.locked`),H(n.id,`figure`))}let r=k.find(e=>e.rules.enemies?.includes(n.id)||e.rules.boss&&jl(e.rules.boss)===n.id);return i(r?W(`ui.hint.foe`,{act:a(r.act)}):W(`ui.locked`),Ec(n.id))}).join(``);let l=[`spirit`,`foe`,`charm`,`bond`].map(e=>{let n=s[e],r=n.filter(t=>o[e](t)).length;return`<button class="chip${e===t?` on`:``}" data-tab="${e}">${W(`ui.tab.${e}`)} <small>${r}/${n.length}</small></button>`}).join(``),u={spirit:W(`ui.spirits`),foe:W(`ui.foes`),charm:W(`ui.charmsTitle`),bond:W(`ui.bondsTitle`)}[t];return`
+      </div>`}nights(e,t){if(e.act===0||e.rules.endless||t.nightMax===0)return``;let n=Math.min(t.night,t.nightMax),r=(e,n)=>`<button class="chip" data-night="${e}" ${e<0||e>t.nightMax?`disabled`:``}>${n}</button>`,i=n>0&&(t.nights[e.id]??0)>=n?` ★`:``,a=n===0?W(`ui.night.none`):`☾${n}${i}`,o=n>0?`<div class="extras">${q(W(`night.${n}`))}</div>`:``;return`
+      <div class="row"><span>${W(`ui.gear.night`)}</span><div>
+        <div class="night">${r(n-1,`‹`)}<b>${a}</b>${r(n+1,`›`)}</div>${o}
+      </div></div>`}bestiary(e,t){let n=wu(e),r=Ou(e),i=(e,t)=>`<div class="entry locked"><div class="pic">${t?`<img class="shade" src="${t}" alt="" />`:``}</div><div><b>???</b><p>${q(e)}</p></div></div>`,a=e=>e?W(`act.${e}`):``,o={spirit:e=>n.heroes.includes(e),foe:t=>e.seen.includes(t),charm:e=>r.includes(e),bond:e=>pa.get(e).heroes.every(e=>n.heroes.includes(e))},s={spirit:kl.filter(e=>e.kind===`spirit`).map(e=>e.id),foe:kl.filter(e=>e.kind===`foe`).map(e=>e.id),charm:mi.map(e=>e.id),bond:fa.map(e=>e.id)},c;c=t===`charm`?mi.map(e=>{if(!r.includes(e.id)){let t=k.find(t=>t.rules.charms?.includes(e.id));return i(t?W(`ui.hint.charm`,{level:eu(t)}):W(`ui.charmLocked`))}return`<div class="entry charm"><div class="pic">✶</div><div><b>${q(Jl(e.id))}</b><p>${q(W(`charm.${e.id}.text`))}</p></div></div>`}).join(``):t===`bond`?fa.map(e=>{let t=e.heroes.filter(e=>!n.heroes.includes(e));if(t.length)return i(W(`ui.hint.bond`,{names:t.map(G).join(` + `)}));let r=e.heroes.map(e=>H(e,`figure`)).map(e=>e?`<img src="${e}" alt="" />`:``).join(``);return`<div class="entry bond" style="--accent:${Ku(e.heroes[0])}"><div class="pic">${r}</div><div><b>${q(Yl(e.id))}</b><p>${q(W(`bond.${e.id}.text`))}</p></div></div>`}).join(``):kl.filter(e=>e.kind===t).map(n=>{if(o[t](n.id))return this.entry(n.id,e);if(t===`spirit`){let e=k.find(e=>e.introduces?.heroes?.includes(n.id));return i(e?W(`ui.hint.spirit`,{level:eu(e)}):W(`ui.locked`),H(n.id,`figure`))}let r=k.find(e=>e.rules.enemies?.includes(n.id)||e.rules.boss&&jl(e.rules.boss)===n.id);return i(r?W(`ui.hint.foe`,{act:a(r.act)}):W(`ui.locked`),Ec(n.id))}).join(``);let l=[`spirit`,`foe`,`charm`,`bond`].map(e=>{let n=s[e],r=n.filter(t=>o[e](t)).length;return`<button class="chip${e===t?` on`:``}" data-tab="${e}">${W(`ui.tab.${e}`)} <small>${r}/${n.length}</small></button>`}).join(``),u={spirit:W(`ui.spirits`),foe:W(`ui.foes`),charm:W(`ui.charmsTitle`),bond:W(`ui.bondsTitle`)}[t];return`
       <div class="screen bestiary">
         <button class="top-back" data-act="menu" aria-label="${W(`ui.back`)}"></button>
         <h1>${W(`ui.bestiary`)}</h1>
@@ -208,20 +211,21 @@ ${n}`);throw n instanceof Error&&n.stack&&(u.stack=n.stack),u}}};ht.defaultOptio
       <div class="zoom" data-close="zoom">
         ${Al.get(e)?.kind===`spirit`&&qu(e,`strike-right`)||(t?`<img src="${t}" alt="${q(n)}" />`:``)}
         <div class="caption">${q(n)}</div>
-      </div>`}prep(e,t){let n=e.act>0?Math.min(t.night,t.nightMax):0,r=Ji(e.loadout?this.chosen(e,t):e.rules,n),i=wu(t),a=e.loadout?.forbid??[],o=Math.min(e.loadout?.size??4,i.heroes.filter(e=>!a.includes(e)).length),s=r.heroes.some(e=>Sa.includes(e));return{night:n,rules:r,pool:i,forbid:a,need:o,armed:s,ready:!e.loadout||r.heroes.length===o&&s,gear:!!e.loadout||e.act>0&&t.nightMax>0}}intro(e,t,n){let{night:r,rules:i,armed:a,ready:o,gear:s}=this.prep(t,n),c=new Set(e.waves.flatMap(e=>e.spawns.map(e=>e.defId))),l=zr.filter(e=>c.has(e)).map(e=>{let t=q(Gl(e)),n=Ec(e);return`<button class="foe${e===i.boss?` boss`:i.featured?.includes(e)?` main`:``}" data-peek="${jl(e)}" aria-label="${t}">${n?`<img src="${n}" alt="${t}" />`:t}</button>`}).join(``),u=i.heroes.map(e=>`<button class="who" data-peek="${e}" aria-label="${q(G(e))}">${this.figure(e)}</button>`).join(``),d=[...i.rites.map(Kl),r>0?`☾${r}`:``].filter(Boolean).join(` · `),f=ru(t),p=t.rules.endless?W(`ui.where.endless`):t.act?W(`ui.where.level`,{act:zu[t.act-1],n:t.n}):W(`ui.where.daily`),m=t.loadout&&!a?`<div class="warn">${W(`ui.needDealer`)}</div>`:``;return`
+      </div>`}prep(e,t){let n=e.act>0?Math.min(t.night,t.nightMax):0,r=Ji(e.loadout?this.chosen(e,t):e.rules,n),i=wu(t),a=e.loadout?.forbid??[],o=Math.min(e.loadout?.size??4,i.heroes.filter(e=>!a.includes(e)).length),s=r.heroes.some(e=>Sa.includes(e));return{night:n,rules:r,pool:i,forbid:a,need:o,armed:s,ready:!e.loadout||r.heroes.length===o&&s,gear:!!e.loadout}}intro(e,t,n){let{rules:r,armed:i,ready:a,gear:o}=this.prep(t,n),s=new Set(e.waves.flatMap(e=>e.spawns.map(e=>e.defId))),c=zr.filter(e=>s.has(e)).map(e=>{let t=q(Gl(e)),n=Ec(e);return`<button class="foe${e===r.boss?` boss`:r.featured?.includes(e)?` main`:``}" data-peek="${jl(e)}" aria-label="${t}">${n?`<img src="${n}" alt="${t}" />`:t}</button>`}).join(``),l=r.heroes.map(e=>`<button class="who" data-peek="${e}" aria-label="${q(G(e))}">${this.figure(e)}</button>`).join(``),u=r.rites.map(Kl).join(` · `),d=ru(t),f=t.rules.endless?W(`ui.where.endless`):t.act?W(`ui.where.level`,{act:zu[t.act-1],n:t.n}):W(`ui.where.daily`),p=t.loadout&&!i?`<div class="warn">${W(`ui.needDealer`)}</div>`:``;return`
       <div class="panel intro">
-        <div class="where">${q(p)}</div>
+        <div class="where">${q(f)}</div>
         <div class="verdict">${q(eu(t))}</div>
         <div class="lore">${q(tu(t))}</div>
-        ${f?`<div class="rule">${q(f)}</div>`:``}
+        ${d?`<div class="rule">${q(d)}</div>`:``}
         <div class="row"><span>${W(`ui.new`)}</span><b>${q(nu(t))}</b></div>
-        <div class="row"><span>${W(`ui.coming`)}</span><div class="foes">${l}</div><b class="waves">${q(i.endless?`∞`:W(`ui.wavesN`,{n:i.waves}))}</b></div>
-        <div class="row"><span>${W(`ui.hata`)}</span><div><div class="hata">${u}</div>${d?`<div class="extras">${q(d)}</div>`:``}</div></div>
-        ${m}
+        <div class="row"><span>${W(`ui.coming`)}</span><div class="foes">${c}</div><b class="waves">${q(r.endless?`∞`:W(`ui.wavesN`,{n:r.waves}))}</b></div>
+        <div class="row"><span>${W(`ui.hata`)}</span><div><div class="hata">${l}</div>${u?`<div class="extras">${q(u)}</div>`:``}</div></div>
+        ${this.nights(t,n)}
+        ${p}
         <div class="actions">
           <button class="back" data-act="map" aria-label="${W(`ui.toMap`)}">‹</button>
-          ${s?`<button data-act="gear">${W(`ui.gear`)}</button>`:``}
-          <button class="primary" data-act="start" data-focus="start" ${o?``:`disabled`}>${W(`ui.fight`)}</button>
+          ${o?`<button data-act="gear">${W(`ui.gear`)}</button>`:``}
+          <button class="primary" data-act="start" data-focus="start" ${a?``:`disabled`}>${W(`ui.fight`)}</button>
         </div>
       </div>`}figure(e){let t=H(e,`figure`)??H(e,`portrait`);return t?`<img class="figure" src="${t}" alt="${q(G(e))}" style="--accent:${Ku(e)}" />`:`<span class="spirit blank" style="--accent:${Ku(e)}">${q(G(e)[0])}</span>`}gear(e,t){let{rules:n,pool:r,forbid:i,need:a,armed:o,ready:s}=this.prep(e,t),c=e.loadout?.require??[],l=e.loadout?r.heroes.map(e=>{let t=n.heroes.includes(e),r=i.includes(e),a=r?W(`ui.asleep`):c.includes(e)?W(`ui.required`):``;return`
               <button class="opt${t?` on`:``}" data-hero="${e}" style="--accent:${Ku(e)}" ${r?`disabled`:``}>
@@ -234,15 +238,14 @@ ${n}`);throw n instanceof Error&&n.stack&&(u.stack=n.stack),u}}};ht.defaultOptio
                 <div class="way" style="--accent:${Ku(e)}">
                   <span>${q(G(e))}</span><div class="chips">${r}${i}</div>
                   <p>${q(a)}</p>
-                </div>`}).join(``):``,f=this.nights(e,t),p=ru(e),m=(e,t,n=``)=>t?`<section class="act"><h2>${q(e)}</h2>${n?`<p class="note">${q(n)}</p>`:``}${t}</section>`:``;return`
+                </div>`}).join(``):``,f=ru(e),p=(e,t,n=``)=>t?`<section class="act"><h2>${q(e)}</h2>${n?`<p class="note">${q(n)}</p>`:``}${t}</section>`:``;return`
       <div class="screen gear">
         <div class="where">${q(W(`ui.gear.where`,{title:eu(e)}))}</div>
         <h1>${W(`ui.gear`)}</h1>
-        ${p?`<div class="rule">${q(p)}</div>`:``}
-        ${m(W(`ui.gear.spirits`,{n:n.heroes.length,need:a}),l?`<div class="opts">${l}</div>`:``)}
-        ${m(W(`ui.gear.rites`,{n:n.rites.length,need:2}),u?`<div class="opts">${u}</div>`:``)}
-        ${m(W(`ui.gear.ways`),d,W(`ui.gear.waysNote`))}
-        ${m(W(`ui.gear.night`),f)}
+        ${f?`<div class="rule">${q(f)}</div>`:``}
+        ${p(W(`ui.gear.spirits`,{n:n.heroes.length,need:a}),l?`<div class="opts">${l}</div>`:``)}
+        ${p(W(`ui.gear.rites`,{n:n.rites.length,need:2}),u?`<div class="opts">${u}</div>`:``)}
+        ${p(W(`ui.gear.ways`),d,W(`ui.gear.waysNote`))}
         ${e.loadout&&!o?`<div class="warn">${W(`ui.needDealer`)}</div>`:``}
         <div class="actions">
           <button data-act="gear-done">${W(`ui.gear.done`)}</button>
